@@ -3,11 +3,16 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ProductImage } from './product-images.entity';
 
 //este decorador se usa para que typeorm sepa que esta clase es una entidad para la base de datos
-@Entity()
+@Entity({
+  //esta key se usa para llamar la tabla de esta forma en la base de datos
+  name: 'products',
+})
 export class Product {
   //este decorador se usa para que typeorm sepa que este campo es la llave primaria de la tabla
   @PrimaryGeneratedColumn('uuid')
@@ -53,7 +58,20 @@ export class Product {
     default: [],
   })
   tags: string[];
-  //imgs
+
+  @OneToMany(
+    // este callback se usa para que typeorm sepa que la relación es de uno a muchos y en este caso la relación es con la entidad ProductImage
+    () => ProductImage,
+    //este callback es para que sean que productImage.product sea igual a product
+    (productImage) => productImage.product,
+    //este objeto indica que cascade es true, lo que significa que si se elimina un producto, se eliminarán todas las imágenes asociadas a ese producto
+    {
+      cascade: true,
+      //especificar el eager en true es para poder usar cualquier método find y que las imágenes se carguen automáticamente
+      eager: true,
+    },
+  )
+  images?: ProductImage[];
 
   @BeforeInsert()
   //esta función ayuda a que el slug se genere automaticamente si no se le pasa uno para el create

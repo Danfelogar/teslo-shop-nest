@@ -13,4 +13,8 @@
 ```
 docker-compose up -d
 ```
-6. run project ```yarn start:dev```
+6. SEED execution
+```
+localhost:3000/api/seed
+```
+7. run project ```yarn start:dev```
