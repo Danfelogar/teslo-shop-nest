@@ -15,6 +15,13 @@ import { MessagesWsModule } from './messages-ws/messages-ws.module';
     ConfigModule.forRoot(),
 
     TypeOrmModule.forRoot({
+      //esta propiedad es para que se pueda conectar a la base de datos de manera segura en producción
+      ssl: process.env.STAGE === 'prod',
+      extra: {
+        ssl:
+          process.env.STAGE === 'prod' ? { rejectUnauthorized: false } : null,
+      },
+
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,

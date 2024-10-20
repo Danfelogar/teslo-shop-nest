@@ -22,3 +22,16 @@ localhost:3000/api/seed
 ```
 http://localhost:3000/api
 ```
+
+9. in deploying app you must change this lines:
+```
+"start": "nest start",
+"start:prod": "node dist/main",
+```
+
+for this:
+```
+"start": "node dist/main",
+"start:prod": "nest start",
+```
+this is for heroku able reed commands and deploy the app (remenber the app was created in node --version: v20.17.0)
