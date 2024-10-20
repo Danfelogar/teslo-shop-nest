@@ -709,7 +709,7 @@ export const initialData: SeedData = {
   ],
   users: [
     {
-      email: 'dangelogar1@gmail.com',
+      email: 'danfelogar1@gmail.com',
       fullName: 'Daniel Felipe Dev 1',
       password: 'Abc123',
       roles: ['admin'],
