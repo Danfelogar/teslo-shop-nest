@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('bootstrap');
 
   // con esto se logra que todas las rutas tengan el prefijo api
   app.setGlobalPrefix('api');
@@ -16,6 +17,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
+  logger.log(`Application listening on port ${process.env.PORT || 3000}`);
 }
 bootstrap();

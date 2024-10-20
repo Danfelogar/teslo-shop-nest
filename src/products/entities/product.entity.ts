@@ -3,10 +3,12 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProductImage } from './product-images.entity';
+import { User } from 'src/auth/entities';
 
 //este decorador se usa para que typeorm sepa que esta clase es una entidad para la base de datos
 @Entity({
@@ -72,6 +74,16 @@ export class Product {
     },
   )
   images?: ProductImage[];
+
+  @ManyToOne(
+    //tabla a la que se apunta
+    () => User,
+    // propiedad de la tabla User que se relaciona con esta tabla
+    (user) => user.product,
+    // eager en true para que se cargue automáticamente el usuario cuando se busque un producto
+    { eager: true },
+  )
+  user: User;
 
   @BeforeInsert()
   //esta función ayuda a que el slug se genere automaticamente si no se le pasa uno para el create
