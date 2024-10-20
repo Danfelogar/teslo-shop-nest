@@ -14,7 +14,10 @@ import { fileFilter, fileNamer } from './helpers';
 import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { ApiTags } from '@nestjs/swagger';
 
+//decorador del swagger para agrupar las rutas
+@ApiTags('Files - get and upload')
 @Controller('files')
 export class FilesController {
   constructor(

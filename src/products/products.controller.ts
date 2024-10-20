@@ -16,7 +16,11 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { ValidRoles } from '../auth/interfaces/valid-roles';
 import { User } from 'src/auth/entities';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Product } from './entities';
 
+//decorador del swagger para agrupar las rutas
+@ApiTags('Products')
 @Controller('products')
 //definiendo aquí le estoy pidiendo al controlador que se proteja si el usuario no esta autenticado
 // @Auth()
@@ -25,6 +29,14 @@ export class ProductsController {
 
   @Post()
   @Auth(ValidRoles.admin, ValidRoles.superUser)
+  //decorador del swagger para documentar la respuesta para este endpoint, el type es para que sepa que tipo de respuesta va a recibir
+  @ApiResponse({
+    status: 201,
+    description: 'Product was created',
+    type: Product,
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 403, description: 'Forbidden. Token related' })
   create(@Body() createProductDto: CreateProductDto, @GetUser() user: User) {
     return this.productsService.create(createProductDto, user);
   }

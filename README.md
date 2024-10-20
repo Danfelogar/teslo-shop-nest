@@ -18,3 +18,7 @@ docker-compose up -d
 localhost:3000/api/seed
 ```
 7. run project ```yarn start:dev```
+8. the doc make with this library ```@nestjs/swagger``` and the url of doc is:
+```
+http://localhost:3000/api
+```
